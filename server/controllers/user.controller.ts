@@ -8,17 +8,12 @@ import path from "path";
 import sendMail from "../utils/sendMail";
 require("dotenv/config");
 
-// register user
+// Register User
 interface IRegistationBody {
   name: string;
   email: string;
   password: string;
   avat?: string;
-}
-
-interface IActivationToken {
-  token: string;
-  activationCode: string;
 }
 
 export const registrationUser = catchAsyncError(
@@ -69,6 +64,12 @@ export const registrationUser = catchAsyncError(
     }
   }
 );
+
+// Activation Token
+interface IActivationToken {
+  token: string;
+  activationCode: string;
+}
 
 export const createActivationToken = (user: any): IActivationToken => {
   const activationCode = Math.floor(1000 + Math.random() * 9000).toString();
