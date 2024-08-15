@@ -45,7 +45,7 @@ We welcome contributions to improve **EduConnectX**! Whether you have bug fixes,
 
 For support, feedback, or inquiries, please contact us:
 
-- **Email**: support@educonnectX.com
+- **Email**: [support@educonnectX.com](mailto:fedsi.yasser@gmail.com)
 - **Website**: [educonnectX.com](https://www.educonnectX.com)
 - **Twitter**: [@educonnectX](https://twitter.com/educonnectX)
 
