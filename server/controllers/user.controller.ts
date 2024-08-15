@@ -6,6 +6,7 @@ import jwt, { Secret } from "jsonwebtoken";
 import ejs from "ejs";
 import path from "path";
 import sendMail from "../utils/sendMail";
+import { sendToken } from "../utils/jwt";
 require("dotenv/config");
 
 // Register User
@@ -13,7 +14,7 @@ interface IRegistationBody {
   name: string;
   email: string;
   password: string;
-  avat?: string;
+  avatar?: string;
 }
 
 export const registrationUser = catchAsyncError(
@@ -116,9 +117,76 @@ export const activateUser = catchAsyncError(
 
       const user = await userModel.create({ name, email, password });
 
-      res.status(201).json({
+      const data = { user: { name: user.name } };
+      const html = await ejs.renderFile(
+        path.join(__dirname, "../mails/confirmMail.ejs"),
+        data
+      );
+
+      try {
+        await sendMail({
+          email: user.email,
+          subject: "User activated successfully",
+          template: "confirmMail.ejs",
+          data,
+        });
+
+        res.status(201).json({
+          success: true,
+          message: "User activated successfully",
+        });
+      } catch (error: any) {
+        return next(new errorHandler(error.message, 400));
+      }
+    } catch (error: any) {
+      return next(new errorHandler(error.message, 400));
+    }
+  }
+);
+
+// Login User
+interface ILoginRequest {
+  email: string;
+  password: string;
+}
+
+export const loginUser = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, password } = req.body as ILoginRequest;
+
+      if (!email || !password) {
+        return next(new errorHandler("Please enter email and password", 400));
+      }
+
+      const user = await userModel.findOne({ email }).select("+password");
+
+      if (!user) {
+        return next(new errorHandler("Invalid email or password", 400));
+      }
+
+      const isPasswordMatch = await user.comparePassword(password);
+
+      if (!isPasswordMatch) {
+        return next(new errorHandler("Invalid email or password", 400));
+      }
+
+      sendToken(user, 200, res);
+    } catch (error: any) {
+      return next(new errorHandler(error.message, 400));
+    }
+  }
+);
+
+// Logout User
+export const logoutUser = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.cookie("access_token", "", { maxAge: 1 });
+      res.cookie("refresh_token", "", { maxAge: 1 });
+      res.status(200).json({
         success: true,
-        message: "User activated successfully",
+        message: "Logged out successfully",
       });
     } catch (error: any) {
       return next(new errorHandler(error.message, 400));
