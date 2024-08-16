@@ -1,0 +1,84 @@
+$font-family: Arial, sans-serif;
+$font-size: 16px;
+$line-height: 1.5;
+$background-color: #fafafa;
+$color: #222;
+$primary-color: #0070f3;
+$secondary-color: #f6f6f6;
+$white-color: #fff;
+
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+    font-family: $font-family;
+    font-size: $font-size;
+    line-height: $line-height;
+    background-color: $background-color;
+    color: $color;
+}
+
+a {
+    color: $color;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+table {
+    td {
+        vertical-align: top;
+    }
+}
+
+/* Layout */
+.email_wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.email_header {
+    background-color: $primary-color;
+    padding: 24px;
+    color: $white-color;
+}
+
+.email_body {
+    padding: 24px;
+    background-color: $white-color;
+}
+
+.email_footer {
+    text-align: center;
+    background-color: $secondary-color;
+    padding: 24px;
+}
+
+/* Buttons */
+.button {
+    display: inline-block;
+    background-color: $primary-color;
+    color: $white-color;
+    font-size: $font-size;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+}

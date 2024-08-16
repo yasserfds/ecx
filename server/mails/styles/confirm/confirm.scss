@@ -1,0 +1,84 @@
+$font-family: Arial, sans-serif;
+$font-size: 16px;
+$line-height: 1.5;
+$body-bg-color: #f4f4f4;
+$body-text-color: #333;
+$link-color: #0070f3;
+$header-bg-color: #0070f3;
+$header-text-color: #ffffff;
+$email-bg-color: #ffffff;
+$email-border-radius: 8px;
+$footer-bg-color: #f0f0f0;
+$footer-text-color: #888;
+$button-bg-color: #0070f3;
+$button-text-color: #ffffff;
+$button-border-radius: 5px;
+
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+    font-family: $font-family;
+    font-size: $font-size;
+    line-height: $line-height;
+    background-color: $body-bg-color;
+    color: $body-text-color;
+}
+
+a {
+    color: $link-color;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    color: $header-text-color;
+}
+
+p {
+    margin: 0 0 20px 0;
+    color: #555;
+}
+
+.email_wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: $email-bg-color;
+    border-radius: $email-border-radius;
+    overflow: hidden;
+}
+
+.email_header {
+    background-color: $header-bg-color;
+    padding: 30px;
+    text-align: center;
+    color: $header-text-color;
+}
+
+.email_body {
+    padding: 30px;
+}
+
+.email_footer {
+    background-color: $footer-bg-color;
+    padding: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: $footer-text-color;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: $button-bg-color;
+    color: $button-text-color;
+    text-align: center;
+    border-radius: $button-border-radius;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 16px;
+}
