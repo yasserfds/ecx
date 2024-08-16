@@ -9,11 +9,11 @@ const redisClient = () => {
     const client = new Redis(process.env.REDIS_URL);
 
     client.on("ready", () => {
-      console.log("🚀 Redis is connected and ready to use.");
+      console.log("Redis is connected and ready to use.");
     });
 
     client.on("error", (err) => {
-      console.error(`❌ Redis connection error: ${err.message}`);
+      console.error(`Redis connection error: ${err.message}`);
     });
 
     return client;
