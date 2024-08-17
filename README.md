@@ -47,7 +47,7 @@ For support, feedback, or inquiries, please contact us:
 
 - **Email**: [support@educonnectX.com](mailto:fedsi.yasser@gmail.com)
 - **Website**: [educonnectx.app](https://educonnectx.app)
-- **Twitter**: [@educonnectX](https://twitter.com/educonnectX)
+- **Twitter**: [@educonnectX](https://twitter.com/ecx_app)
 
 ---
 
