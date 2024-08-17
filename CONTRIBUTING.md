@@ -62,13 +62,11 @@ git push origin your-branch-name
 
 Go to the original EduConnectX repository and open a Pull Request (PR) from your forked repository and branch. Please provide a detailed description of your changes and link to any relevant issues.
 
----
-### Code of Conduct
+## Code of Conduct
 
 Please note that this project is governed by a Code of Conduct. By participating, you are expected to uphold this code.
 
----
-### Contributing Guidelines
+## Contributing Guidelines
 
 Before making significant contributions, please read through the following guidelines:
 
@@ -76,8 +74,7 @@ Before making significant contributions, please read through the following guide
 * Issue Reporting: If you report a bug or suggest a feature, provide as much context as possible, including steps to reproduce the bug or a detailed description of the feature.
 * Commit Messages: Use clear and descriptive commit messages. Follow the format: Type: Subject. Example: fix: correct calculation error in module X.
 
----
-### Need Help?
+## Need Help?
 
 If you have questions or need help, feel free to reach out by opening an issue, or join our community discussion forum.
 
