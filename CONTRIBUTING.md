@@ -78,4 +78,5 @@ Before making significant contributions, please read through the following guide
 
 If you have questions or need help, feel free to reach out by opening an issue, or join our community discussion forum.
 
+---
 Thank you for contributing to EduConnectX! Let's build something amazing together.
