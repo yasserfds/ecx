@@ -379,7 +379,7 @@ export const updateUserPassword = catchAsyncError(
   }
 );
 
-// Update user Pfp
+// Update user pfp
 interface IUpdateProfilePicture {
   avatar: string;
 }
