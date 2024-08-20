@@ -9,6 +9,7 @@ import {
   registrationUser,
   socialAuth,
   updateAccessToken,
+  updateProfilePicture,
   updateUserInfo,
   updateUserPassword,
 } from "../controllers/user.controller";
@@ -45,6 +46,9 @@ userRouter.put("/update-info", isAuthenticated, updateUserInfo);
 
 // Route to update user password; only accessible if the user is authenticated
 userRouter.put("/update-password", isAuthenticated, updateUserPassword);
+
+// Route to update user pfp; only accessible if the user is authenticated
+userRouter.put("/update-avatar", isAuthenticated, updateProfilePicture)
 
 // Export the router to be used in other parts of the application
 export default userRouter;
