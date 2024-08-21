@@ -400,7 +400,7 @@ export const updateProfilePicture = catchAsyncError(
           await cloudinary.v2.uploader.destroy(user?.avatar?.public_id);
 
           const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-            doler: "avatars",
+            folder: "avatars",
             width: 150,
           });
           user.avatar = {
@@ -409,7 +409,7 @@ export const updateProfilePicture = catchAsyncError(
           };
         } else {
           const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-            doler: "avatars",
+            folder: "avatars",
             width: 150,
           });
           user.avatar = {
