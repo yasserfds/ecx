@@ -3,6 +3,7 @@ import { authorizeRoles, isAuthenticated } from "../middleware/auth";
 import {
   editCourse,
   getAllCourses,
+  getCourseByUser,
   getSignleCourse,
   uploadCourse,
 } from "../controllers/course.controller";
@@ -36,5 +37,6 @@ courseRouter.get("/get-course/:id", isAuthenticated, getSignleCourse);
 // Accessible only to authenticated users
 courseRouter.get("/get-courses/", isAuthenticated, getAllCourses);
 
+courseRouter.get("/get-course-content/:id", getCourseByUser);
 // Export the router to be used in other parts of the application
 export default courseRouter;
