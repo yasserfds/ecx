@@ -37,6 +37,6 @@ courseRouter.get("/get-course/:id", isAuthenticated, getSignleCourse);
 // Accessible only to authenticated users
 courseRouter.get("/get-courses/", isAuthenticated, getAllCourses);
 
-courseRouter.get("/get-course-content/:id", getCourseByUser);
+courseRouter.get("/get-course-content/:id", isAuthenticated, getCourseByUser);
 // Export the router to be used in other parts of the application
 export default courseRouter;
