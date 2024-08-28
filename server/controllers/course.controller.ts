@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import ejs from "ejs";
 import path from "path";
 import sendMail from "../utils/sendMail";
+
 // Upload course
 export const uploadCourse = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
