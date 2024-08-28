@@ -1,6 +1,8 @@
 import express from "express";
 import { authorizeRoles, isAuthenticated } from "../middleware/auth";
 import {
+  addAnswer,
+  addQuestion,
   editCourse,
   getAllCourses,
   getCourseByUser,
@@ -38,5 +40,10 @@ courseRouter.get("/get-course/:id", isAuthenticated, getSignleCourse);
 courseRouter.get("/get-courses/", isAuthenticated, getAllCourses);
 
 courseRouter.get("/get-course-content/:id", isAuthenticated, getCourseByUser);
+
+courseRouter.put("/add-question", isAuthenticated, addQuestion);
+
+courseRouter.put("/add-answer", isAuthenticated, addAnswer);
+
 // Export the router to be used in other parts of the application
 export default courseRouter;
