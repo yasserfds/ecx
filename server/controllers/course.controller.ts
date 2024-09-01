@@ -365,3 +365,52 @@ export const addReview = catchAsyncError(
     }
   }
 );
+
+// Add reply in review
+interface IAddReviewData {
+  comment: string;
+  courseId: string;
+  reviewId: string;
+}
+
+export const addReplyToReview = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { comment, courseId, reviewId } = req.body as IAddReviewData;
+
+      const course = await courseModel.findById(courseId);
+
+      if (!course) {
+        return next(new errorHandler("Course not found", 400));
+      }
+
+      const review = course?.reviews?.find(
+        (rev: any) => rev._id.toString() === reviewId
+      );
+
+      if (!review) {
+        return next(new errorHandler("Review not found", 400));
+      }
+
+      const replyData: any = {
+        user: req.user,
+        comment,
+      };
+
+      if (!review.commentReplies) {
+        review.commentReplies = [];
+      } else {
+        review.commentReplies.push(replyData);
+      }
+
+      await course?.save();
+
+      res.status(200).json({
+        success: true,
+        course,
+      });
+    } catch (error: any) {
+      return next(new errorHandler(error.message, 500));
+    }
+  }
+);
