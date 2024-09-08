@@ -9,7 +9,7 @@ import sendMail from "../utils/sendMail";
 import path from "path";
 import ejs from "ejs";
 import { OrganizeImportsMode } from "typescript";
-import { newOrder } from "../services/order.service";
+import { getAllOrdersService, newOrder } from "../services/order.service";
 import { privateDecrypt } from "crypto";
 
 // Create order
@@ -88,6 +88,17 @@ export const createOrder = catchAsyncError(
       await course.save();
 
       newOrder(data, res, next);
+    } catch (error: any) {
+      return next(new errorHandler(error.message, 500));
+    }
+  }
+);
+
+// Get All Courses -- Only for admin
+export const getAllOrders = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllOrdersService(res);
     } catch (error: any) {
       return next(new errorHandler(error.message, 500));
     }
