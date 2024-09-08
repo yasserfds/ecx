@@ -2,17 +2,18 @@ import express from "express";
 
 // Import user controller functions to handle various user-related operations
 import {
-  activateUser,          // Function to activate a user account
-  getAllUsers,           // Function to fetch all users (admin only)
-  getUserInfo,           // Function to get information of the currently logged-in user
-  loginUser,             // Function to handle user login
-  logoutUser,            // Function to handle user logout
-  registrationUser,      // Function to handle user registration
-  socialAuth,            // Function to handle social authentication
-  updateAccessToken,     // Function to refresh and update the access token
-  updateProfilePicture,  // Function to update the user's profile picture
-  updateUserInfo,        // Function to update the user's personal information
-  updateUserPassword,    // Function to update the user's password
+  activateUser, // Function to activate a user account
+  getAllUsers, // Function to fetch all users (admin only)
+  getUserInfo, // Function to get information of the currently logged-in user
+  loginUser, // Function to handle user login
+  logoutUser, // Function to handle user logout
+  registrationUser, // Function to handle user registration
+  socialAuth, // Function to handle social authentication
+  updateAccessToken, // Function to refresh and update the access token
+  updateProfilePicture, // Function to update the user's profile picture
+  updateUserInfo, // Function to update the user's personal information
+  updateUserPassword,
+  updateUserRole, // Function to update the user's password
 } from "../controllers/user.controller";
 
 // Import middleware for authentication and role authorization
@@ -54,9 +55,17 @@ userRouter.put("/update-avatar", isAuthenticated, updateProfilePicture);
 // Route to fetch all users; requires the user to be authenticated and have admin role
 userRouter.put(
   "/get-all-users/",
+  isAuthenticated, // Middleware to check if the user is authenticated
+  authorizeRoles("admin"), // Middleware to check if the user has the 'admin' role
+  getAllUsers // Controller function to get all users
+);
+
+// Route to update a user's role; requires the user to be authenticated and have admin role
+userRouter.put(
+  "/update-user/",
   isAuthenticated,          // Middleware to check if the user is authenticated
   authorizeRoles("admin"),  // Middleware to check if the user has the 'admin' role
-  getAllUsers               // Controller function to get all users
+  updateUserRole            // Controller function to update a user's role
 );
 
 // Export the router to be used in other parts of the application
