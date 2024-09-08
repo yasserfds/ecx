@@ -5,16 +5,17 @@ import { authorizeRoles, isAuthenticated } from "../middleware/auth";
 
 // Import course controller functions to handle course-related operations
 import {
-  addAnswer,              // Function to add an answer to a question in a course
-  addQuestion,            // Function to add a new question to a course
-  addReplyToReview,       // Function to add a reply to a course review
-  addReview,              // Function to add a review to a course
-  editCourse,             // Function to edit an existing course
-  getAllCourses,          // Function to get a list of all courses
-  getAllCoursesForAdmin,  // Function to get all courses specifically for admin purposes
-  getCourseByUser,        // Function to get course content for a specific user
-  getSignleCourse,        // Function to get details of a single course
-  uploadCourse,           // Function to create/upload a new course
+  addAnswer, // Function to add an answer to a question in a course
+  addQuestion, // Function to add a new question to a course
+  addReplyToReview, // Function to add a reply to a course review
+  addReview,
+  deleteCourse, // Function to add a review to a course
+  editCourse, // Function to edit an existing course
+  getAllCourses, // Function to get a list of all courses
+  getAllCoursesForAdmin, // Function to get all courses specifically for admin purposes
+  getCourseByUser, // Function to get course content for a specific user
+  getSignleCourse, // Function to get details of a single course
+  uploadCourse, // Function to create/upload a new course
 } from "../controllers/course.controller";
 
 // Create a new router instance for handling course-related routes
@@ -108,6 +109,14 @@ courseRouter.put(
   isAuthenticated,
   authorizeRoles("admin"),
   getAllCoursesForAdmin
+);
+
+// Route to delete a course by its ID; requires the user to be authenticated and have admin role
+courseRouter.delete(
+  "/delete-course/:id", // URL parameter `:id` specifies the ID of the course to be deleted
+  isAuthenticated, // Middleware to check if the user is authenticated
+  authorizeRoles("admin"), // Middleware to check if the user has the 'admin' role, allowing only admins to delete courses
+  deleteCourse // Controller function to handle the deletion of the course
 );
 
 // Export the router to be used in other parts of the application

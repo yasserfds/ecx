@@ -2,7 +2,8 @@ import express from "express";
 
 // Import user controller functions to handle various user-related operations
 import {
-  activateUser, // Function to activate a user account
+  activateUser,
+  deleteUser, // Function to activate a user account
   getAllUsers, // Function to fetch all users (admin only)
   getUserInfo, // Function to get information of the currently logged-in user
   loginUser, // Function to handle user login
@@ -63,9 +64,17 @@ userRouter.put(
 // Route to update a user's role; requires the user to be authenticated and have admin role
 userRouter.put(
   "/update-user/",
-  isAuthenticated,          // Middleware to check if the user is authenticated
-  authorizeRoles("admin"),  // Middleware to check if the user has the 'admin' role
-  updateUserRole            // Controller function to update a user's role
+  isAuthenticated, // Middleware to check if the user is authenticated
+  authorizeRoles("admin"), // Middleware to check if the user has the 'admin' role
+  updateUserRole // Controller function to update a user's role
+);
+
+// Route to delete a user; requires the user to be authenticated and have admin role
+userRouter.delete(
+  "/delete-user/:id",
+  isAuthenticated, // Middleware to check if the user is authenticated
+  authorizeRoles("admin"), // Middleware to check if the user has the 'admin' role
+  deleteUser // Controller function to handle deleting a user
 );
 
 // Export the router to be used in other parts of the application

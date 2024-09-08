@@ -10,6 +10,7 @@ import ejs from "ejs";
 import path from "path";
 import sendMail from "../utils/sendMail";
 import notificationModel from "../models/notification.order";
+import { error } from "console";
 
 // Upload course
 export const uploadCourse = catchAsyncError(
@@ -434,6 +435,32 @@ export const getAllCoursesForAdmin = catchAsyncError(
       getAllCoursesService(res);
     } catch (error: any) {
       return next(new errorHandler(error.message, 500));
+    }
+  }
+);
+
+// Delete Course -- Only Admin
+export const deleteCourse = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+
+      const course = await courseModel.findById(id);
+
+      if (!course) {
+        return next(new errorHandler("Course not found", 404));
+      }
+
+      await course.deleteOne({ id });
+
+      await redis.del(id);
+
+      res.status(201).json({
+        success: true,
+        message: "Course deleted successfully",
+      });
+    } catch (error: any) {
+      return next(new errorHandler(error.message, 400));
     }
   }
 );
