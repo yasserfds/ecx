@@ -25,5 +25,17 @@ layoutRouter.post(
 layoutRouter.put(
   "/edit-layout",
   isAuthenticated, // Middleware to check if the user is authenticated
-  authorizeRoles("admin") // Middleware to authorize access for users with the 'admin' role
+  authorizeRoles("admin"), // Middleware to authorize access for users with the 'admin' role
+  editLayout // Controller function to handle the editing of a layout
 );
+
+// Route to get a layout by type
+// This route is protected by authentication middleware
+// Only authenticated users can access this route
+layoutRouter.get(
+  "/get-layout",
+  isAuthenticated, // Middleware to check if the user is authenticated
+  getLayoutByType // Controller function to retrieve a layout by its type
+);
+
+export default layoutRouter; // Export the router to be used in the main application
