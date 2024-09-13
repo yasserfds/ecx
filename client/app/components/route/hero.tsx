@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-center gap-4">
           <Link
             href="/signup"
-            className="px-6 py-3 bg-gray-900 text-white font-semibold rounded-md hover:bg-gray-800 transition-all duration-300 dark:bg-gray-800 dark:hover:bg-gray-700"
+            className="px-6 py-3 bg-gray-900 text-white font-semibold rounded-md hover:bg-gray-800 transition-all duration-300 dark:bg-white dark:text-black dark:hover:bg-gray-700"
           >
             Get Started
           </Link>
