@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
             Get Started
           </Link>
           <Link
-            href="/learn-more"
+            href="/about"
             className="px-6 py-3 bg-transparent border-2 border-gray-900 text-gray-900 font-semibold rounded-md hover:bg-gray-900 hover:text-white transition-all duration-300 dark:border-gray-800 dark:text-white dark:hover:bg-gray-800 dark:hover:text-gray-900"
           >
             Learn More
