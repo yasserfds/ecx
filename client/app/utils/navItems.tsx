@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { navItemsData } from "../lib/data";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 type Props = {
   activeItem: number;
@@ -8,6 +9,17 @@ type Props = {
 };
 
 const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    if (isMobile) {
+      // Trigger the sidebar animation when mobile mode is detected
+      setShowSidebar(true);
+    } else {
+      setShowSidebar(false);
+    }
+  }, [isMobile]);
+
   return (
     <>
       {/* Desktop Navigation */}
@@ -28,9 +40,15 @@ const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
           ))}
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation with Tailwind animation */}
       {isMobile && (
-        <div className="800px:hidden mt-5">
+        <div
+          className={`800px:hidden mt-5 transform transition-transform duration-500 ease-in-out ${
+            showSidebar
+              ? "-translate-x-0 opacity-100"
+              : "translate-x-full opacity-0"
+          }`}
+        >
           <div className="w-full text-center py-6">
             <Link href={"/"} passHref>
               <span

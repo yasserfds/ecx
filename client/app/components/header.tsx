@@ -5,9 +5,9 @@ import Link from "next/link";
 import NavItems from "../utils/navItems";
 import { ThemeSwitcher } from "../utils/themeSwitcher";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
-import Hero from "./route/hero";
 import CustomModal from "../utils/customModal";
 import Login from "./auth/login";
+import SignUp from "./auth/signup";
 
 type Props = {
   open: boolean;
@@ -35,9 +35,9 @@ const Header: FC<Props> = ({ open, setOpen, activeItem, route, setRoute }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleClose = (e: any) => {
-    if (e.target.id === "screen") {
-      setOpenSidebar(false); // Properly close the sidebar
+  const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.currentTarget.id === "screen") {
+      setOpenSidebar(false);
     }
   };
 
@@ -88,10 +88,9 @@ const Header: FC<Props> = ({ open, setOpen, activeItem, route, setRoute }) => {
             id="screen"
           >
             <div
-              className={`w-[70%] fixed z-[999999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0 transform translate-x-0 transition-transform duration-500 ease-in-out`}
-              style={{
-                transform: openSidebar ? "translateX(0)" : "translateX(100%)",
-              }}
+              className={`w-[70%] fixed z-[999999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0 transform transition-transform duration-500 ease-in-out ${
+                openSidebar ? "translate-x-0" : "translate-x-full"
+              }`}
             >
               <NavItems activeItem={activeItem} isMobile={true} />
               <HiOutlineUserCircle
@@ -108,18 +107,25 @@ const Header: FC<Props> = ({ open, setOpen, activeItem, route, setRoute }) => {
           </div>
         )}
       </div>
-      {route === "Login" && (
-        <>
-          {open && (
-            <CustomModal
-              open={open}
-              setOpen={setOpen}
-              setRoute={setRoute}
-              activeItem={activeItem}
-              component={Login}
-            />
-          )}
-        </>
+
+      {route === "Login" && open && (
+        <CustomModal
+          open={open}
+          setOpen={setOpen}
+          setRoute={setRoute}
+          activeItem={activeItem}
+          component={Login}
+        />
+      )}
+
+      {route === "Sign-Up" && open && (
+        <CustomModal
+          open={open}
+          setOpen={setOpen}
+          setRoute={setRoute}
+          activeItem={activeItem}
+          component={SignUp}
+        />
       )}
     </div>
   );
