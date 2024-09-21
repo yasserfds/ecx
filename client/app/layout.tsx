@@ -2,6 +2,7 @@ import { Josefin_Sans, Poppins } from "next/font/google";
 import "./globals.css";
 import React from "react";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+          <Toaster position="top-center" reverseOrder={false} />
         </ThemeProvider>
       </body>
     </html>
