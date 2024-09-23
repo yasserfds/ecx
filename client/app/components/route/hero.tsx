@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 const Hero: React.FC = () => {
   return (
@@ -9,7 +9,8 @@ const Hero: React.FC = () => {
           Welcome to EduConnectX
         </h1>
         <p className="text-lg md:text-xl mb-8 mx-auto">
-          Empowering education through community and technology. Discover resources, courses, and tools to enhance your learning experience.
+          Empowering education through community and technology. Discover
+          resources, courses, and tools to enhance your learning experience.
         </p>
         <div className="flex flex-col md:flex-row justify-center gap-4">
           <Link
