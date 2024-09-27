@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -8,6 +8,8 @@ import {
 } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { styles } from "@/app/styles/style";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import toast from "react-hot-toast";
 
 type Props = {
   setRoute: (route: string) => void;
@@ -23,13 +25,33 @@ const schema = Yup.object().shape({
 
 const SignUp: FC<Props> = ({ setRoute }) => {
   const [show, setShow] = useState(false);
+  const [register, { data, error, isSuccess }] = useRegisterMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      const message = data?.message || "Registration successful";
+      toast.success(message);
+      setRoute("Verification");
+    } else if (error) {
+      console.log("Error Object:", error); // Inspect the error object
+      if ("data" in error) {
+        const errorData = error as any; // Cast error to any for TypeScript
+        console.log("Error Data:", errorData.data); // Inspect the data property
+        const errorMessage =
+          errorData.data.message || "An unknown error occurred.";
+        toast.error(errorMessage);
+      } else {
+        toast.error("An unknown error occurred."); // Fallback error message
+      }
+    }
+  }, [isSuccess, error]);
 
   const formik = useFormik({
     initialValues: { name: "", email: "", password: "" },
     validationSchema: schema,
     onSubmit: async ({ name, email, password }) => {
-      setRoute("verification");
-      console.log(name, email, password);
+      const data = { name, email, password }; // Keep name as it is now valid
+      await register(data);
     },
   });
 
