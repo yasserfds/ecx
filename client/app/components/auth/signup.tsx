@@ -31,17 +31,11 @@ const SignUp: FC<Props> = ({ setRoute }) => {
     if (isSuccess) {
       const message = data?.message || "Registration successful";
       toast.success(message);
-      setRoute("Verification");
+      setRoute("verification");
     } else if (error) {
-      console.log("Error Object:", error); // Inspect the error object
       if ("data" in error) {
-        const errorData = error as any; // Cast error to any for TypeScript
-        console.log("Error Data:", errorData.data); // Inspect the data property
-        const errorMessage =
-          errorData.data.message || "An unknown error occurred.";
-        toast.error(errorMessage);
-      } else {
-        toast.error("An unknown error occurred."); // Fallback error message
+        const errorData = error as any;
+        toast.error(errorData.data.message);
       }
     }
   }, [isSuccess, error]);
