@@ -8,7 +8,13 @@ import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
 import CustomModal from "../utils/customModal";
 import Login from "./auth/login";
 import SignUp from "./auth/signup";
-import verification from "./auth/verification";
+import Verification from "./auth/verification";
+import { useSelector } from "react-redux";
+import avatar from "../../public/assets/avatar.png";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { useSocialAuthMutation } from "@/redux/features/auth/authApi";
+import toast from "react-hot-toast";
 
 type Props = {
   open: boolean;
@@ -21,15 +27,35 @@ type Props = {
 const Header: FC<Props> = ({ open, setOpen, activeItem, route, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
+  const user = useSelector((state: any) => state.auth.user);
+  const { data: sessionData } = useSession();
+  const [socialAuth, { isSuccess, error }] = useSocialAuthMutation();
 
-  // Handle scroll event listeners
+  // Handle user login via social authentication
+  useEffect(() => {
+    if (!user && sessionData) {
+      socialAuth({
+        email: sessionData.user?.email,
+        name: sessionData.user?.name,
+        avatar: sessionData.user?.image,
+      });
+    }
+  }, [sessionData, user, socialAuth]); // Removed isSuccess and error to prevent unnecessary re-renders
+
+  // Display toast notifications based on login state
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Login successfully!");
+    }
+    if (error) {
+      toast.error("An error occurred");
+    }
+  }, [isSuccess, error]); // Keep this separate to ensure toasts are handled independently
+
+  // Handle scroll event listeners for header styling
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 85) {
-        setActive(true);
-      } else {
-        setActive(false);
-      }
+      setActive(window.scrollY > 85);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -55,8 +81,8 @@ const Header: FC<Props> = ({ open, setOpen, activeItem, route, setRoute }) => {
           <div className="w-full h-[80px] flex items-center justify-between p-3">
             <div>
               <Link
-                href={"/"}
-                className={`text-[25px] font-Poppins font-[500] text-black dark:text-white`}
+                href="/"
+                className="text-[25px] font-Poppins font-[500] text-black dark:text-white"
               >
                 EduConnectX
               </Link>
@@ -72,11 +98,21 @@ const Header: FC<Props> = ({ open, setOpen, activeItem, route, setRoute }) => {
                   onClick={() => setOpenSidebar(true)}
                 />
               </div>
-              <HiOutlineUserCircle
-                className="hidden 800px:block cursor-pointer dark:text-white text-black"
-                size={25}
-                onClick={() => setOpen(true)}
-              />
+              {user ? (
+                <Link href="/profile">
+                  <Image
+                    src={user.avatar || avatar}
+                    alt="User Avatar"
+                    className="w-[30px] h-[30px] rounded-full cursor-pointer"
+                  />
+                </Link>
+              ) : (
+                <HiOutlineUserCircle
+                  className="hidden 800px:block cursor-pointer dark:text-white text-black"
+                  size={25}
+                  onClick={() => setOpen(true)}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -109,33 +145,20 @@ const Header: FC<Props> = ({ open, setOpen, activeItem, route, setRoute }) => {
         )}
       </div>
 
-      {route === "Login" && open && (
+      {/* Modal Handling */}
+      {open && (
         <CustomModal
           open={open}
           setOpen={setOpen}
           setRoute={setRoute}
           activeItem={activeItem}
-          component={Login}
-        />
-      )}
-
-      {route === "Sign-Up" && open && (
-        <CustomModal
-          open={open}
-          setOpen={setOpen}
-          setRoute={setRoute}
-          activeItem={activeItem}
-          component={SignUp}
-        />
-      )}
-
-      {route === "verification" && open && (
-        <CustomModal
-          open={open}
-          setOpen={setOpen}
-          setRoute={setRoute}
-          activeItem={activeItem}
-          component={verification}
+          component={
+            route === "Login"
+              ? Login
+              : route === "Sign-Up"
+              ? SignUp
+              : Verification
+          }
         />
       )}
     </div>

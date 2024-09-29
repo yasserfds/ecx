@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import { userRegistration } from "./authSlice";
+import { userLoggedIn, userRegistration } from "./authSlice";
 
 type RegistrationResponse = {
   message: string;
@@ -10,7 +10,6 @@ type RegistrationData = {};
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    // endpoints here
     register: builder.mutation<RegistrationResponse, RegistrationData>({
       query: (data) => ({
         url: "registration",
@@ -27,7 +26,7 @@ export const authApi = apiSlice.injectEndpoints({
             })
           );
         } catch (error: any) {
-          console.log(error);
+          console.log("Registration Error:", error);
         }
       },
     }),
@@ -41,7 +40,55 @@ export const authApi = apiSlice.injectEndpoints({
         },
       }),
     }),
+    login: builder.mutation({
+      query: ({ email, password }) => ({
+        url: "login",
+        method: "POST",
+        body: { email, password },
+        credentials: "include" as const,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          dispatch(
+            userLoggedIn({
+              accessToken: result.data.accessToken, // Make sure the backend returns accessToken
+              user: result.data.user,
+            })
+          );
+        } catch (error: any) {
+          console.log("Login Error:", error);
+        }
+      },
+    }),
+    socialAuth: builder.mutation({
+      query: ({ email, name, avatar }) => ({
+        url: "socialAuth",
+        method: "POST",
+        body: { email, name, avatar },
+        credentials: "include" as const,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          dispatch(
+            userLoggedIn({
+              accessToken: result.data.accessToken, // Assuming the backend returns a unique token for social auth
+              user: result.data.user,
+            })
+          );
+        } catch (error: any) {
+          console.log("Social Auth Error:", error);
+        }
+      },
+    }),
   }),
 });
 
-export const { useRegisterMutation, useActivationMutation } = authApi;
+// Export hooks for each mutation to use in components
+export const {
+  useRegisterMutation,
+  useActivationMutation,
+  useLoginMutation,
+  useSocialAuthMutation,
+} = authApi;
