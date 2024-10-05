@@ -30,9 +30,9 @@ const NavItems: FC<Props> = ({ activeItem, isMobile }) => {
               <span
                 className={`${
                   activeItem === index
-                    ? "dark:text-black text-[crimson]" // Active item styling
+                    ? "dark:text-blue-500 text-[crimson]" // Active item styling
                     : "dark:text-white text-black"
-                } text-[18px] px-6 font-Poppins font-[400] hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300`}
+                } text-[18px] px-6 font-Poppins font-[400] hover:text-blue-500 dark:hover:text-black transition-colors duration-300`}
               >
                 {item.name}
               </span>
